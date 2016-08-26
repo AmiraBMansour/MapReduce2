@@ -26,7 +26,7 @@ import org.apache.hadoop.mapred.TextOutputFormat;
 
 public class LongestWord {
 
-	static HashMap<String,Integer> mapOccurence = new HashMap<String,Integer>();
+	static HashMap<String,Integer> mMapOccurence = new HashMap<String,Integer>();
 
 	public static class Map extends MapReduceBase implements
 	Mapper<LongWritable, Text, Text, IntWritable> {
@@ -53,23 +53,23 @@ public class LongestWord {
 			while (values.hasNext()) {
 				sum += values.next().get();
 			}
-			mapOccurence.put(key.toString(),sum);
-			List<String> keyWithSameOcc = new ArrayList<String>();
-			for(Entry<String,Integer> entry : mapOccurence.entrySet()){
+			mMapOccurence.put(key.toString(),sum);
+			List<String> lKeyWithSameOcc = new ArrayList<String>();
+			for(Entry<String,Integer> entry : mMapOccurence.entrySet()){
 				if(entry.getValue().equals(sum)){
-					keyWithSameOcc.add(entry.getKey());
+					lKeyWithSameOcc.add(entry.getKey());
 				}
 			}
 			int max = 0;
-			String longestWord ="";
-			for(String name: keyWithSameOcc){
+			String lLongestWord ="";
+			for(String name: lKeyWithSameOcc){
 				if(name.length() > max){
 					max = name.length();
-					longestWord = name;
+					lLongestWord = name;
 				}
 			}
-			if(longestWord.isEmpty()){
-			Text word = new Text(longestWord);
+			if(lLongestWord.isEmpty()){
+			Text word = new Text(lLongestWord);
 			output.collect(word, new IntWritable(sum));
 			}
 		}
